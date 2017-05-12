@@ -7,13 +7,13 @@ ENV TERM xterm
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-#RUN locale-gen en_US.UTF-8
 #ENV LANG en_US.UTF-8
 #ENV LANGUAGE en_US:en
 #ENV LC_ALL en_US.UTF-8
+ENV LANG C.UTF-8
 
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -qy software-properties-common && \
+RUN apt-get update && apt-get install -qy software-properties-common && \
     add-apt-repository -y ppa:ondrej/php && \
     apt-get update && apt-get install -y \
             php5.6-cli \
@@ -97,4 +97,5 @@ WORKDIR /var/www
 EXPOSE 9000
 
 
-CMD ["/usr/sbin/php-fpm5.6", "-FO"]
+#CMD ["/usr/sbin/php-fpm5.6", "-FO"]
+CMD ["/usr/sbin/php5-fpm", "-FO"]
