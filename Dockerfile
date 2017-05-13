@@ -7,6 +7,7 @@ ENV TERM xterm
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
+ENV TERM xterm
 ENV LANG C.UTF-8
 
 
@@ -94,5 +95,4 @@ WORKDIR /var/www
 EXPOSE 9000
 
 
-#CMD ["/usr/sbin/php-fpm5.6", "-FO"]
-CMD ["/usr/sbin/php5-fpm", "-FO"]
+CMD ["/usr/sbin/php-fpm5.6", "-FO"]
