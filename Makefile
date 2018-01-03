@@ -1,2 +1,2 @@
 build:
-	- docker build -t avnir/php-fpm .
+	- docker build -t avnir/php-fpm:php5 .

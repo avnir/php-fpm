@@ -4,11 +4,8 @@ MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
-ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-
-ENV TERM xterm
 ENV LANG C.UTF-8
+ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
 RUN apt-get update && apt-get install -qy software-properties-common && \
@@ -25,9 +22,6 @@ RUN apt-get update && apt-get install -qy software-properties-common && \
             php5.6-xml \
             php5.6-mbstring \
             php5.6-zip \
-            libsqlite3-dev \
-            php5.6-sqlite3 \
-            sqlite3 \
             unzip \
             --no-install-recommends && \
     apt-get remove -y --purge software-properties-common && \
