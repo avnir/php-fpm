@@ -4,6 +4,7 @@ MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 ENV TERM xterm
 ENV LANG C.UTF-8
+ENV DEBIAN_FRONTEND noninteractive
 
 
 RUN apt-get update && \
@@ -20,7 +21,6 @@ RUN apt-get update && \
                 php7.2-json \
                 php7.2-xml \
                 php7.2-mbstring \
-                php7.2-sqlite3 \
                 php-memcached \
                 mysql-client \
                 zip \
