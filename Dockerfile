@@ -18,7 +18,6 @@ RUN apt-get update && apt-get install -y \
             php7.0-json \
             php7.0-xml \
             php7.0-mbstring \
-            php7.0-sqlite3 \
             php-memcached \
             mysql-client \
             zip \
