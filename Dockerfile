@@ -8,9 +8,11 @@ ENV LANG C.UTF-8
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-RUN apt-get update && apt-get install -qy software-properties-common && \
+RUN apt-get update && apt-get -qy upgrade && \
+    apt-get install -qy software-properties-common && \
     add-apt-repository -y ppa:ondrej/php && \
-    apt-get update && apt-get install -y \
+    apt-get update && apt-get -qy upgrade && \
+    apt-get install -qy \
             php5.6-cli \
             php5.6-gd \
             php5.6-curl \
@@ -25,8 +27,8 @@ RUN apt-get update && apt-get install -qy software-properties-common && \
             mysql-client \
             unzip \
             --no-install-recommends && \
-    apt-get remove -y --purge software-properties-common && \
-    apt-get -y autoremove && \
+    apt-get remove -qy --purge software-properties-common && \
+    apt-get -qy autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -56,11 +58,7 @@ RUN sed -i \
         -e "s/^user = nobody/user = www-data/g" \
         -e "s/^;listen.owner = nobody/listen.owner = www-data/g" \
         -e "s/^;listen.group = nogroup/listen.group = www-data/g" \
-        -e "s/^;listen.mode = 0660/listen.mode = 0750/g" \
         -e "s/^listen\(.*\)/listen = 0.0.0.0:9000/g" \
-        -e "s/^;slowlog/slowlog/g" \
-        -e "s/^slowlog\(.*\)/slowlog = \/var\/log\/slowlog.log/g" \
-        -e "s/^;request_slowlog_timeout/request_slowlog_timeout/g" \
         -e "s/^;pm.status_path/pm.status_path/g" \
         -e "s/^;request_terminate_timeout/request_terminate_timeout/g" \
         -e "s/^;catch_workers_output/catch_workers_output/g" \
