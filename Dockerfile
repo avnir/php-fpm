@@ -52,7 +52,6 @@ RUN sed -i \
         -e "s/^user = nobody/user = www-data/g" \
         -e "s/^;listen.owner = nobody/listen.owner = www-data/g" \
         -e "s/^;listen.group = nogroup/listen.group = www-data/g" \
-        -e "s/^;listen.mode = 0660/listen.mode = 0750/g" \
         -e "s/^listen\(.*\)/listen = 0.0.0.0:9000/g" \
         -e "s/^;request_slowlog_timeout/request_slowlog_timeout/g" \
         -e "s/^;pm.status_path/pm.status_path/g" \
