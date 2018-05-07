@@ -1,2 +1,2 @@
 build:
-	- docker build -t avnir/php-fpm:7.0 .
+	- docker build -t avnir/php-fpm:php7.0 .
