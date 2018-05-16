@@ -13,6 +13,7 @@ RUN apt-get update && apt-get -qy upgrade && \
     add-apt-repository -y ppa:ondrej/php && \
     apt-get update && apt-get -qy upgrade && \
     apt-get install -qy \
+            ca-certificates \
             php5.6-cli \
             php5.6-gd \
             php5.6-curl \
