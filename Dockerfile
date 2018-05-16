@@ -41,9 +41,6 @@ RUN sed -i \
         -e "s/^pid\(.*\)/pid = run\/php-fpm.pid/g" \
         -e "s/^;pid\(.*\)/pid = run\/php-fpm.pid/g" \
         -e "s~^;daemonize = yes*$~daemonize = no~g" \
-        -e "s~^;emergency_restart_threshold.*$~emergency_restart_threshold = 10~g" \
-        -e "s~^;emergency_restart_interval.*$~emergency_restart_interval = 1m~g" \
-        -e "s~^;process_control_timeout.*$~process_control_timeout = 10s~g" \
             /etc/php/7.2/fpm/php-fpm.conf
 
 
@@ -53,9 +50,6 @@ RUN sed -i \
         -e "s/^;listen.owner = nobody/listen.owner = www-data/g" \
         -e "s/^;listen.group = nogroup/listen.group = www-data/g" \
         -e "s/^listen\(.*\)/listen = 0.0.0.0:9000/g" \
-        -e "s/^;pm.status_path/pm.status_path/g" \
-        -e "s/^;request_terminate_timeout/request_terminate_timeout/g" \
-        -e "s/^;catch_workers_output/catch_workers_output/g" \
             /etc/php/7.2/fpm/pool.d/www.conf
 
 
