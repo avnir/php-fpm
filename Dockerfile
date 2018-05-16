@@ -10,6 +10,7 @@ ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/s
 
 RUN apt-get update && apt-get -qy upgrade && \
     apt-get install -qy \
+            ca-certificates \
             php7.0-cli \
             php7.0-gd \
             php7.0-curl \
