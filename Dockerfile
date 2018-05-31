@@ -8,14 +8,15 @@ ENV LANG C.UTF-8
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-RUN apt-get update && apt-get -qy upgrade && \
-    apt-get install -qy software-properties-common && \
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:ondrej/php && \
-    apt-get update && apt-get -qy upgrade && \
-    apt-get install -qy \
+    apt-get update && apt-get -y upgrade && \
+    apt-get install -y \
             ca-certificates \
             php5.6-cli \
             php5.6-gd \
+            php5.6-pdo \
             php5.6-curl \
             php5.6-mcrypt \
             php5.6-mysql \
@@ -28,8 +29,8 @@ RUN apt-get update && apt-get -qy upgrade && \
             mysql-client \
             unzip \
             --no-install-recommends && \
-    apt-get remove -qy --purge software-properties-common && \
-    apt-get -qy autoremove && \
+    apt-get remove -y --purge software-properties-common && \
+    apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
