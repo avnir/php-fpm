@@ -13,6 +13,7 @@ RUN apt-get update && apt-get -qy upgrade && \
             ca-certificates \
             php7.2-cli \
             php7.2-gd \
+            php7.2-PDO \
             php7.2-curl \
             php7.2-mysql \
             php7.2-fpm \
