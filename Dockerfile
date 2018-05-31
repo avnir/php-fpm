@@ -8,11 +8,14 @@ ENV LANG C.UTF-8
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-RUN apt-get update && apt-get -qy upgrade && \
-    apt-get install -qy --no-install-recommends \
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get install -y --no-install-recommends \
             ca-certificates \
             php7.1-cli \
             php7.1-gd \
+            php7.1-pdo \
             php7.1-curl \
             php7.1-mysql \
             php7.1-fpm \
