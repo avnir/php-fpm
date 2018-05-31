@@ -13,6 +13,7 @@ RUN apt-get update && apt-get -qy upgrade && \
             ca-certificates \
             php7.0-cli \
             php7.0-gd \
+            php7.0-PDO \
             php7.0-curl \
             php7.0-mcrypt \
             php7.0-mysql \
