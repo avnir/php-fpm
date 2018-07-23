@@ -14,15 +14,16 @@ RUN apt-get update && apt-get -y upgrade && \
     apt-get install -y --no-install-recommends \
             ca-certificates \
             php7.1-cli \
-            php7.1-gd \
-            php7.1-pdo \
             php7.1-curl \
-            php7.1-mysql \
             php7.1-fpm \
+            php7.1-gd \
             php7.1-imap \
             php7.1-json \
-            php7.1-xml \
             php7.1-mbstring \
+            php7.1-mysql \
+            php7.1-pdo \
+            php7.1-xml \
+            php7.1-zip \
             php-memcached \
             mysql-client \
             zip \
@@ -33,9 +34,6 @@ RUN apt-get update && apt-get -y upgrade && \
 
 
 RUN sed -i \
-        -e "s~^display_errors.*$~display_errors = Off~g" \
-        -e "s~^display_startup_errors.*$~display_startup_errors = Off~g" \
-        -e "s~^track_errors.*$~track_errors = Off~g" \
         -e "s~^;cgi.fix_pathinfo.*$~cgi.fix_pathinfo=0~g" \
             /etc/php/7.1/fpm/php.ini
 
@@ -57,13 +55,6 @@ RUN sed -i \
 
 
 RUN echo "zend_extension=opcache.so" >> /etc/php/7.1/fpm/php.ini
-RUN echo "\n\nopcache.memory_consumption=128" >> /etc/php/7.1/mods-available/opcache.ini && \
-    echo "opcache.interned_strings_buffer=8" >> /etc/php/7.1/mods-available/opcache.ini && \
-    echo "opcache.max_accelerated_files=4000" >> /etc/php/7.1/mods-available/opcache.ini && \
-    echo "opcache.revalidate_freq=60" >> /etc/php/7.1/mods-available/opcache.ini && \
-    echo "opcache.fast_shutdown=1" >> /etc/php/7.1/mods-available/opcache.ini && \
-    echo "opcache.enable_file_override=1" >> /etc/php/7.1/mods-available/opcache.ini && \
-    echo "opcache.save_comments=0" >> /etc/php/7.1/mods-available/opcache.ini
 
 
 # We need to create an empty file, otherwise the volume will belong to root.
