@@ -55,11 +55,6 @@ RUN sed -i \
             /etc/php/7.1/fpm/pool.d/www.conf
 
 
-#RUN echo "zend_extension=opcache.so" >> /etc/php/7.1/fpm/php.ini
-#RUN echo "extension=mongodb.so" >> /etc/php/7.1/fpm/php.ini
-#RUN echo "extension=mongodb.so" >> /etc/php/7.1/cli/php.ini
-
-
 # We need to create an empty file, otherwise the volume will belong to root.
 RUN mkdir -p /var/www/ && touch /var/www/placeholder && chown -R www-data:www-data /var/www
 
