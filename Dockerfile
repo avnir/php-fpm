@@ -11,16 +11,18 @@ ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/s
 RUN apt-get update && apt-get -qy upgrade && \
     apt-get install -qy --no-install-recommends \
             ca-certificates \
-            php7.2-cli \
-            php7.2-gd \
-            php7.2-PDO \
-            php7.2-curl \
-            php7.2-mysql \
-            php7.2-fpm \
-            php7.2-imap \
-            php7.2-json \
-            php7.2-xml \
-            php7.2-mbstring \
+            php-cli \
+            php-curl \
+            php-fpm \
+            php-gd \
+            php-imap \
+            php-json \
+            php-mbstring \
+            php-mongodb \
+            php-mysql \
+            php-pdo \
+            php-xml \
+            php-zip \
             php-memcached \
             mysql-client \
             zip \
@@ -31,9 +33,6 @@ RUN apt-get update && apt-get -qy upgrade && \
 
 
 RUN sed -i \
-        -e "s~^display_errors.*$~display_errors = Off~g" \
-        -e "s~^display_startup_errors.*$~display_startup_errors = Off~g" \
-        -e "s~^track_errors.*$~track_errors = Off~g" \
         -e "s~^;cgi.fix_pathinfo.*$~cgi.fix_pathinfo=0~g" \
             /etc/php/7.2/fpm/php.ini
 
@@ -52,16 +51,6 @@ RUN sed -i \
         -e "s/^;listen.group = nogroup/listen.group = www-data/g" \
         -e "s/^listen\(.*\)/listen = 0.0.0.0:9000/g" \
             /etc/php/7.2/fpm/pool.d/www.conf
-
-
-RUN echo "zend_extension=opcache.so" >> /etc/php/7.2/fpm/php.ini
-RUN echo "\n\nopcache.memory_consumption=128" >> /etc/php/7.2/mods-available/opcache.ini && \
-    echo "opcache.interned_strings_buffer=8" >> /etc/php/7.2/mods-available/opcache.ini && \
-    echo "opcache.max_accelerated_files=4000" >> /etc/php/7.2/mods-available/opcache.ini && \
-    echo "opcache.revalidate_freq=60" >> /etc/php/7.2/mods-available/opcache.ini && \
-    echo "opcache.fast_shutdown=1" >> /etc/php/7.2/mods-available/opcache.ini && \
-    echo "opcache.enable_file_override=1" >> /etc/php/7.2/mods-available/opcache.ini && \
-    echo "opcache.save_comments=0" >> /etc/php/7.2/mods-available/opcache.ini
 
 
 # We need to create an empty file, otherwise the volume will belong to root.
