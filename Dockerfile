@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:17.10
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 
@@ -8,11 +8,11 @@ ENV LANG C.UTF-8
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-RUN apt-get update && apt-get -y upgrade && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y --no-install-recommends \
             ca-certificates \
+            php7.1-dev \
+            php7.1-dom \
             php7.1-cli \
             php7.1-curl \
             php7.1-fpm \
@@ -20,6 +20,7 @@ RUN apt-get update && apt-get -y upgrade && \
             php7.1-imap \
             php7.1-json \
             php7.1-mbstring \
+            php7.1-mongodb \
             php7.1-mysql \
             php7.1-pdo \
             php7.1-xml \
@@ -54,7 +55,9 @@ RUN sed -i \
             /etc/php/7.1/fpm/pool.d/www.conf
 
 
-RUN echo "zend_extension=opcache.so" >> /etc/php/7.1/fpm/php.ini
+#RUN echo "zend_extension=opcache.so" >> /etc/php/7.1/fpm/php.ini
+#RUN echo "extension=mongodb.so" >> /etc/php/7.1/fpm/php.ini
+#RUN echo "extension=mongodb.so" >> /etc/php/7.1/cli/php.ini
 
 
 # We need to create an empty file, otherwise the volume will belong to root.
