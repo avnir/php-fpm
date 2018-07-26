@@ -11,8 +11,6 @@ ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/s
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y --no-install-recommends \
             ca-certificates \
-            php7.1-dev \
-            php7.1-dom \
             php7.1-cli \
             php7.1-curl \
             php7.1-fpm \
