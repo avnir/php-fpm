@@ -1,11 +1,10 @@
 FROM ubuntu:18.04
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
-
-ENV DEBIAN_FRONTEND noninteractive
-ENV TERM xterm
-ENV LANG C.UTF-8
-ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV DEBIAN_FRONTEND noninteractive\
+TERM="xterm" \
+LANG C.UTF-8 \
+PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
 RUN apt-get update && apt-get -qy upgrade && \
