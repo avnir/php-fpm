@@ -27,6 +27,7 @@ RUN apt-get update && apt-get -y upgrade && \
             php5.6-mbstring \
             php5.6-zip \
             mysql-client \
+            zip \
             unzip \
             --no-install-recommends && \
     apt-get remove -y --purge software-properties-common && \
