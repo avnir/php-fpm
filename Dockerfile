@@ -15,17 +15,21 @@ RUN apt-get update && apt-get -qy upgrade && \
     ca-certificates \
     php-cli \
     php-curl \
+    php-dev \
     php-fpm \
     php-gd \
     php-imap \
     php-json \
     php-mbstring \
+    php-memcached \
     php-mongodb \
     php-mysql \
+    php-pear \
     php-pdo \
     php-xml \
     php-zip \
-    php-memcached \
+    php-xdebug \
+    make \
     mysql-client \
     zip \
     unzip && \
@@ -40,7 +44,9 @@ RUN sed -i \
 
 
 RUN sed -i \
-    -e "s~^;daemonize = yes*$~daemonize = no~g" \
+    -e "s/^pid\(.*\)/pid = run\/php-fpm.pid/g" \
+    -e "s/^;pid\(.*\)/pid = run\/php-fpm.pid/g" \
+    -e "s~^;daemonize = yes*$~daemonize = no~g" \	
     /etc/php/7.2/fpm/php-fpm.conf
 
 
