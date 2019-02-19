@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install --no-install-recommends --no-install-sugge
     php7.3-sqlite3 \
     php7.3-xml \
     php7.3-zip \
+    php-xdebug \
     make \
     mysql-client \
     tzdata \
