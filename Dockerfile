@@ -2,16 +2,24 @@ FROM ubuntu:18.04
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 
-ENV DEBIAN_FRONTEND noninteractive \
-    TERM="xterm" \
-    LANG EN_US.UTF-8 \
-    LANGUAGE en_US:en \
-    LC_ALL EN_US.UTF-8 \
-    PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM="xterm"
+ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
 RUN apt-get update && apt-get -qy upgrade && \
-    apt-get install -qy --no-install-recommends \
+    apt-get install -qy locales && \
+    locale-gen en_US.UTF-8
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+
+RUN ln -fs /usr/share/zoneinfo/US/Mountain /etc/localtime
+
+
+RUN apt-get update && apt-get install -qy --no-install-recommends \
     ca-certificates \
     php-cli \
     php-curl \
