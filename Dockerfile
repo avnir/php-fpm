@@ -4,39 +4,38 @@ MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM="xterm"
-ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
 RUN apt-get update && apt-get -qy upgrade && \
     apt-get install -qy locales && \
     locale-gen en_US.UTF-8
 
+
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 
-RUN ln -fs /usr/share/zoneinfo/US/Mountain /etc/localtime
-
-
-RUN apt-get update && apt-get install -qy --no-install-recommends \
+RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -qy \
     ca-certificates \
+    php-bcmath \
     php-cli \
+    php-common \
     php-curl \
-    php-dev \
     php-fpm \
     php-gd \
     php-imap \
     php-json \
     php-mbstring \
     php-memcached \
-    php-mongodb \
     php-mysql \
-    php-pear \
+    php-opcache \
     php-pdo \
+    php-sqlite3 \
     php-xml \
     php-zip \
     php-xdebug \
+    git \
     make \
     mysql-client \
     zip \
