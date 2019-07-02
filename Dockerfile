@@ -9,6 +9,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests gnupg \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
         php7.3-cli \
@@ -23,7 +24,11 @@ RUN apt-get update \
         ca-certificates \
         curl \
         make \
-        unzip
+        unzip \
+        php7.3-memcached \
+        php7.3-mysql \
+        php-xdebug
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo \
     && composer clear-cache \
@@ -40,7 +45,7 @@ RUN sed -i \
 RUN sed -i \
     -e "s/^pid\(.*\)/pid = run\/php-fpm.pid/g" \
     -e "s/^;pid\(.*\)/pid = run\/php-fpm.pid/g" \
-    -e "s~^;daemonize = yes*$~daemonize = no~g" \	
+    -e "s~^;daemonize = yes*$~daemonize = no~g" \      
     /etc/php/7.3/fpm/php-fpm.conf
 
 
@@ -53,7 +58,16 @@ RUN sed -i \
     /etc/php/7.3/fpm/pool.d/www.conf
 
 
+RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc
+RUN printf "set completion-ignore-case On" >> /etc/inputrc
+
+
+ADD start-container /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-container
+
+
 EXPOSE 9000
 
 
+ENTRYPOINT ["start-container"]
 CMD ["php-fpm7.3"]
