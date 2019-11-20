@@ -12,22 +12,22 @@ RUN apt-get update \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
+        ca-certificates \
+        curl \
         php7.3-cli \
         php7.3-curl \
         php7.3-fpm \
+        php7.3-gd \
         php7.3-json \
         php7.3-mbstring \
         php7.3-opcache \
         php7.3-readline \
         php7.3-xml \
         php7.3-zip \
-        ca-certificates \
-        curl \
-        make \
-        unzip \
         php7.3-memcached \
         php7.3-mysql \
-        php-xdebug
+        php-xdebug \
+        unzip
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo \
