@@ -1,4 +1,4 @@
-FROM ubuntu:19.04
+FROM ubuntu:18.04
 LABEL maintainer="arexhepi@gmail.com"
 
 
@@ -14,18 +14,18 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
         ca-certificates \
         curl \
-        php7.3-cli \
-        php7.3-curl \
-        php7.3-fpm \
-        php7.3-gd \
-        php7.3-json \
-        php7.3-mbstring \
-        php7.3-opcache \
-        php7.3-readline \
-        php7.3-xml \
-        php7.3-zip \
-        php7.3-memcached \
-        php7.3-mysql \
+        php7.4-cli \
+        php7.4-curl \
+        php7.4-fpm \
+        php7.4-gd \
+        php7.4-json \
+        php7.4-mbstring \
+        php7.4-opcache \
+        php7.4-readline \
+        php7.4-xml \
+        php7.4-zip \
+        php7.4-memcached \
+        php7.4-mysql \
         php-xdebug \
         unzip
 
@@ -39,14 +39,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN sed -i \
     -e "s~^;cgi.fix_pathinfo.*$~cgi.fix_pathinfo=0~g" \
-    /etc/php/7.3/fpm/php.ini
+    /etc/php/7.4/fpm/php.ini
 
 
 RUN sed -i \
     -e "s/^pid\(.*\)/pid = run\/php-fpm.pid/g" \
     -e "s/^;pid\(.*\)/pid = run\/php-fpm.pid/g" \
     -e "s~^;daemonize = yes*$~daemonize = no~g" \      
-    /etc/php/7.3/fpm/php-fpm.conf
+    /etc/php/7.4/fpm/php-fpm.conf
 
 
 RUN sed -i \
@@ -55,7 +55,7 @@ RUN sed -i \
     -e "s/^;listen.owner = nobody/listen.owner = www-data/g" \
     -e "s/^;listen.group = nogroup/listen.group = www-data/g" \
     -e "s/^listen\(.*\)/listen = 0.0.0.0:9000/g" \
-    /etc/php/7.3/fpm/pool.d/www.conf
+    /etc/php/7.4/fpm/pool.d/www.conf
 
 
 RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc
@@ -70,4 +70,4 @@ EXPOSE 9000
 
 
 ENTRYPOINT ["start-container"]
-CMD ["php-fpm7.3"]
+CMD ["php-fpm7.4"]
