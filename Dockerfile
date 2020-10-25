@@ -8,29 +8,33 @@ ENV LANG C.UTF-8
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-RUN apt-get update && apt-get -qy upgrade && \
-    apt-get install -qy \
-            ca-certificates \
-            php7.0-cli \
-            php7.0-gd \
-            php7.0-PDO \
-            php7.0-curl \
-            php7.0-mcrypt \
-            php7.0-mysql \
-            php7.0-fpm \
-            php7.0-imap \
-            php7.0-json \
-            php7.0-xml \
-            php7.0-mbstring \
-            php-memcached \
-            mysql-client \
-            zip \
-            unzip \
-            --no-install-recommends && \
-    apt-get -y autoremove && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
+        ca-certificates \
+        curl \
+        php7.0-cli \
+        php7.0-curl \
+        php7.0-fpm \
+        php7.0-gd \
+        php7.0-json \
+        php7.0-opcache \
+        php7.0-readline \
+        php7.0-xml \
+        php7.0-zip \
+        php7.0-mbstring \
+        php7.0-mcrypt \
+        php7.0-mysql \
+        php-memcached \
+        php-xdebug \
+        mysql-client \
+        zip \
+        unzip
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer clear-cache \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 RUN sed -i \
         -e "s~^display_errors.*$~display_errors = Off~g" \
