@@ -1,14 +1,9 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 LABEL maintainer="arexhepi@gmail.com"
 
 
 ENV DEBIAN_FRONTEND noninteractive
 
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests gnupg \
-    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
@@ -19,6 +14,7 @@ RUN apt-get update \
         php7.4-fpm \
         php7.4-gd \
         php7.4-json \
+        php7.4-ldap \
         php7.4-mbstring \
         php7.4-opcache \
         php7.4-readline \
@@ -30,7 +26,6 @@ RUN apt-get update \
         unzip
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer global require hirak/prestissimo \
     && composer clear-cache \
     && apt-get -y autoremove \
     && apt-get clean \
