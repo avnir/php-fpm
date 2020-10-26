@@ -1,11 +1,14 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TERM xterm
-ENV LANG C.UTF-8
-ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests gnupg \
+    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 
 
 RUN apt-get update \
@@ -37,9 +40,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 RUN sed -i \
-        -e "s~^display_errors.*$~display_errors = Off~g" \
-        -e "s~^display_startup_errors.*$~display_startup_errors = Off~g" \
-        -e "s~^track_errors.*$~track_errors = Off~g" \
         -e "s~^;cgi.fix_pathinfo.*$~cgi.fix_pathinfo=0~g" \
             /etc/php/7.0/fpm/php.ini
 
@@ -48,10 +48,7 @@ RUN sed -i \
         -e "s/^pid\(.*\)/pid = run\/php-fpm.pid/g" \
         -e "s/^;pid\(.*\)/pid = run\/php-fpm.pid/g" \
         -e "s~^;daemonize = yes*$~daemonize = no~g" \
-        -e "s~^;emergency_restart_threshold.*$~emergency_restart_threshold = 10~g" \
-        -e "s~^;emergency_restart_interval.*$~emergency_restart_interval = 1m~g" \
-        -e "s~^;process_control_timeout.*$~process_control_timeout = 10s~g" \
-            /etc/php/7.0/fpm/php-fpm.conf
+        /etc/php/7.0/fpm/php-fpm.conf
 
 
 RUN sed -i \
@@ -60,31 +57,19 @@ RUN sed -i \
         -e "s/^;listen.owner = nobody/listen.owner = www-data/g" \
         -e "s/^;listen.group = nogroup/listen.group = www-data/g" \
         -e "s/^listen\(.*\)/listen = 0.0.0.0:9000/g" \
-        -e "s/^;pm.status_path/pm.status_path/g" \
-        -e "s/^;request_terminate_timeout/request_terminate_timeout/g" \
-        -e "s/^;catch_workers_output/catch_workers_output/g" \
-            /etc/php/7.0/fpm/pool.d/www.conf
+        /etc/php/7.0/fpm/pool.d/www.conf
 
 
-RUN echo "zend_extension=opcache.so" >> /etc/php/7.0/fpm/php.ini
-RUN echo "\n\nopcache.memory_consumption=128" >> /etc/php/7.0/mods-available/opcache.ini && \
-    echo "opcache.interned_strings_buffer=8" >> /etc/php/7.0/mods-available/opcache.ini && \
-    echo "opcache.max_accelerated_files=4000" >> /etc/php/7.0/mods-available/opcache.ini && \
-    echo "opcache.revalidate_freq=60" >> /etc/php/7.0/mods-available/opcache.ini && \
-    echo "opcache.fast_shutdown=1" >> /etc/php/7.0/mods-available/opcache.ini && \
-    echo "opcache.enable_file_override=1" >> /etc/php/7.0/mods-available/opcache.ini && \
-    echo "opcache.save_comments=0" >> /etc/php/7.0/mods-available/opcache.ini
+RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc
+RUN printf "set completion-ignore-case On" >> /etc/inputrc
 
 
-# We need to create an empty file, otherwise the volume will belong to root.
-RUN mkdir -p /var/www/ && touch /var/www/placeholder && chown -R www-data:www-data /var/www
-
-
-VOLUME /var/www
-WORKDIR /var/www
+ADD start-container /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-container
 
 
 EXPOSE 9000
 
 
-CMD ["/usr/sbin/php-fpm7.0", "-FO"]
+ENTRYPOINT ["start-container"]
+CMD ["php-fpm7.0"]

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+
+if [ "$APP_ENV" != "production" ]; then
+    echo "Enabling xdebug"
+
+    ## FPM
+    ln -sf /etc/php/7.0/mods-available/xdebug.ini /etc/php/7.0/fpm/conf.d/20-xdebug.ini
+
+    ## CLI
+    ln -sf /etc/php/7.0/mods-available/xdebug.ini /etc/php/7.0/cli/conf.d/20-xdebug.ini
+else
+    echo "Disabling xdebug in production"
+
+    ## FPM
+    if [ -e /etc/php/7.0/fpm/conf.d/20-xdebug.ini ]; then
+        rm -f /etc/php/7.0/fpm/conf.d/20-xdebug.ini
+    fi
+
+    ## CLI
+    if [ -e /etc/php/7.0/cli/conf.d/20-xdebug.ini ]; then
+        rm -f /etc/php/7.0/cli/conf.d/20-xdebug.ini
+    fi
+fi
+
+
+exec "$@"
