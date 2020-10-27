@@ -1,22 +1,18 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -e
 
 
 PUID=${PUID:-500}
 PGID=${PGID:-500}
+ENV=${APP_ENV:-production}
 
 
 groupmod -o -g "$PGID" www-data
 usermod -o -u "$PUID" www-data
 
 
-# echo "
-# -------------------------
-# UID:    $(id -u www-data)
-# GID:    $(id -g www-data)
-# -------------------------
-# "
-
-if [ ! "production" == "$APP_ENV" ] && [ ! "prod" == "$APP_ENV" ]; then
+if [ "$ENV" != "production" ]; then
     echo "Enabling xdebug in development"
 
     ## FPM
