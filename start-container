@@ -1,8 +1,19 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -e
 
 
-if [ "$APP_ENV" != "production" ]; then
-    echo "Enabling xdebug"
+PUID=${PUID:-500}
+PGID=${PGID:-500}
+ENV=${APP_ENV:-production}
+
+
+groupmod -o -g "$PGID" www-data
+usermod -o -u "$PUID" www-data
+
+
+if [ "$ENV" != "production" ]; then
+    echo "Enabling xdebug in development"
 
     ## FPM
     ln -sf /etc/php/7.0/mods-available/xdebug.ini /etc/php/7.0/fpm/conf.d/20-xdebug.ini
