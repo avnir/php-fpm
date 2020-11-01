@@ -57,12 +57,7 @@ RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc
 RUN printf "set completion-ignore-case On" >> /etc/inputrc
 
 
-ADD start-container /usr/local/bin/start-container
-RUN chmod +x /usr/local/bin/start-container
-
-
 EXPOSE 9000
 
 
-ENTRYPOINT ["start-container"]
 CMD ["php-fpm7.4"]
