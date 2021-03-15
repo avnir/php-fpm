@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
         ca-certificates \
+        php7.4 \
         php7.4-cli \
         php7.4-curl \
         php7.4-fpm \
@@ -43,6 +44,7 @@ RUN sed -i \
     -e "s/^;listen.owner = nobody/listen.owner = www-data/g" \
     -e "s/^;listen.group = nogroup/listen.group = www-data/g" \
     -e "s/^listen\(.*\)/listen = 0.0.0.0:9000/g" \
+    -e "s/^;security.limit_extensions = */security.limit_extensions = /g" \
     /etc/php/7.4/fpm/pool.d/www.conf
 
 
