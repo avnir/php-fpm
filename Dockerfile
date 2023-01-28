@@ -11,16 +11,18 @@ RUN apt-get update \
         php7.4 \
         php7.4-cli \
         php7.4-curl \
+        php7.4-dom \
         php7.4-fpm \
         php7.4-gd \
-        php7.4-json \
+        php7.4-intl \
         php7.4-ldap \
         php7.4-mbstring \
-        php7.4-opcache \
-        php7.4-readline \
-        php7.4-xml \
         php7.4-memcached \
         php7.4-mysql \
+        php7.4-opcache \
+        php7.4-readline \
+        php7.4-simplexml \
+        php7.4-xml \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*

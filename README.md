@@ -4,11 +4,11 @@ This is a [Docker](http://www.docker.com) image using [PHP-FPM](http://php-fpm.o
 
 ## Versions/Tags
 
-- [php7.4](https://github.com/avnir/php-fpm/tree/php7.4), [php7.3](https://github.com/avnir/php-fpm/tree/php7.3), [php7.2](https://github.com/avnir/php-fpm/tree/php7.2), [php7.1](https://github.com/avnir/php-fpm/tree/php7.1), [php7.0](https://github.com/avnir/php-fpm/tree/php7.0), [php5](https://github.com/avnir/php-fpm/tree/php5)
+- [php8.1](https://github.com/avnir/php-fpm/tree/php8.1), [php7.4](https://github.com/avnir/php-fpm/tree/php7.4), [php5](https://github.com/avnir/php-fpm/tree/php5)
 
 ## Examples
 
-- `avnir/php-fpm:latest`
+- `avnir/php-fpm:php8.1`
 - `avnir/php-fpm:php7.3`
 - `avnir/php-fpm:php5`
 
