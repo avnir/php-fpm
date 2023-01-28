@@ -1,2 +1,2 @@
 build:
-	- docker build -t avnir/php-fpm:php8.1 .
+	- docker build -t avnir/php-fpm:php8.2 .
