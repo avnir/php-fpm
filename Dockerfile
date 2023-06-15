@@ -1,28 +1,37 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="arexhepi@gmail.com"
-
 
 ENV DEBIAN_FRONTEND noninteractive
 
-
 RUN apt-get update \
+    && apt-get install -y gnupg gosu curl make zip unzip ca-certificates zip unzip libcap2-bin libpng-dev python2 dnsutils \
+    && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
+    && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
-        ca-certificates \
-        php7.4 \
+        php7.4-bcmath \
         php7.4-cli \
         php7.4-curl \
-        php7.4-dom \
-        php7.4-fpm \
+        php7.4-dev \
         php7.4-gd \
+        php7.4-igbinary \
+        php7.4-imagick \
+        php7.4-imap \
         php7.4-intl \
         php7.4-ldap \
         php7.4-mbstring \
         php7.4-memcached \
+        php7.4-msgpack \
         php7.4-mysql \
-        php7.4-opcache \
+        php7.4-pcov \
         php7.4-readline \
-        php7.4-simplexml \
+        php7.4-redis \
+        php7.4-soap \
+        php7.4-swoole \
+        php7.4-xdebug \
         php7.4-xml \
+        php7.4-zip \
+        php7.4-fpm \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
@@ -54,7 +63,8 @@ RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc
 RUN printf "set completion-ignore-case On" >> /etc/inputrc
 
 
+STOPSIGNAL SIGQUIT
 EXPOSE 9000
 
 
-CMD ["php-fpm7.4"]
+CMD ["php-fpm"]
