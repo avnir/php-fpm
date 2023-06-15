@@ -1,33 +1,37 @@
 FROM ubuntu:22.04
 LABEL maintainer="arexhepi@gmail.com"
 
-
 ENV DEBIAN_FRONTEND noninteractive
 
-
 RUN apt-get update \
-    && apt-get install software-properties-common -y \
-    && add-apt-repository ppa:ondrej/php
-
-RUN apt-get update \
+    && apt-get install -y gnupg gosu curl make zip unzip ca-certificates zip unzip libcap2-bin libpng-dev python2 dnsutils \
+    && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
+    && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
-        ca-certificates \
-        php8.2 \
+        php8.2-bcmath \
         php8.2-cli \
         php8.2-curl \
-        php8.2-dom \
-        php8.2-fpm \
+        php8.2-dev \
         php8.2-gd \
+        php8.2-igbinary \
+        php8.2-imagick \
+        php8.2-imap \
         php8.2-intl \
         php8.2-ldap \
         php8.2-mbstring \
-        php8.2-mcrypt \
         php8.2-memcached \
+        php8.2-msgpack \
         php8.2-mysql \
-        php8.2-opcache \
+        php8.2-pcov \
         php8.2-readline \
-        php8.2-simplexml \
+        php8.2-redis \
+        php8.2-soap \
+        php8.2-swoole \
+        php8.2-xdebug \
         php8.2-xml \
+        php8.2-zip \
+        php8.2-fpm \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
@@ -59,7 +63,8 @@ RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc
 RUN printf "set completion-ignore-case On" >> /etc/inputrc
 
 
+STOPSIGNAL SIGQUIT
 EXPOSE 9000
 
 
-CMD ["php-fpm8.2"]
+CMD ["php-fpm"]
