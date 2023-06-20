@@ -4,7 +4,7 @@ LABEL maintainer="arexhepi@gmail.com"
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
-    && apt-get install -y gnupg gosu curl make zip unzip ca-certificates zip unzip libcap2-bin libpng-dev python2 dnsutils \
+    && apt-get install -y gnupg gosu curl make ca-certificates zip unzip mysql-client libcap2-bin libpng-dev dnsutils \
     && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
     && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
@@ -13,6 +13,7 @@ RUN apt-get update \
         php8.1-cli \
         php8.1-curl \
         php8.1-dev \
+        php8.1-fpm \
         php8.1-gd \
         php8.1-igbinary \
         php8.1-imagick \
@@ -31,7 +32,6 @@ RUN apt-get update \
         php8.1-xdebug \
         php8.1-xml \
         php8.1-zip \
-        php8.1-fpm \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
