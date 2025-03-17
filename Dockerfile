@@ -1,27 +1,29 @@
 FROM ubuntu:22.04
-LABEL maintainer="arexhepi@gmail.com"
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
-    && apt-get install -y gnupg gosu curl make zip unzip ca-certificates zip unzip libcap2-bin libpng-dev python2 dnsutils \
-    && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
+# Install dependencies and PHP
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends --no-install-suggests gnupg \
+        gosu curl ca-certificates zip unzip libcap2-bin libpng-dev build-essential \
+        libxml2-dev libssl-dev libcurl4-openssl-dev pkg-config mysql-client \
+    && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor -o /usr/share/keyrings/ppa_ondrej_php.gpg \
     && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
         php8.2-bcmath \
         php8.2-cli \
+        php8.2-common \
         php8.2-curl \
         php8.2-dev \
+        php8.2-fpm \
         php8.2-gd \
         php8.2-igbinary \
         php8.2-imagick \
-        php8.2-imap \
         php8.2-intl \
         php8.2-ldap \
         php8.2-mbstring \
         php8.2-memcached \
-        php8.2-msgpack \
         php8.2-mysql \
         php8.2-pcov \
         php8.2-readline \
@@ -31,8 +33,7 @@ RUN apt-get update \
         php8.2-xdebug \
         php8.2-xml \
         php8.2-zip \
-        php8.2-fpm \
-    && apt-get -y autoremove \
+    && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
@@ -58,13 +59,12 @@ RUN sed -i \
     -e "s/^;security.limit_extensions = */security.limit_extensions = /g" \
     /etc/php/8.2/fpm/pool.d/www.conf
 
-
-RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc
-RUN printf "set completion-ignore-case On" >> /etc/inputrc
+# Configure nano and inputrc
+RUN printf "set nowrap\nset tabsize 2" > /etc/nanorc \
+    && printf "set completion-ignore-case On" >> /etc/inputrc
 
 
 STOPSIGNAL SIGQUIT
 EXPOSE 9000
-
 
 CMD ["php-fpm"]
