@@ -26,6 +26,7 @@ RUN apt-get install -y --no-install-recommends --no-install-suggests gnupg \
         php8.2-memcached \
         php8.2-mysql \
         php8.2-pcov \
+        php-pear \
         php8.2-readline \
         php8.2-redis \
         php8.2-soap \
@@ -37,6 +38,7 @@ RUN apt-get install -y --no-install-recommends --no-install-suggests gnupg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
+RUN pecl install excimer
 
 RUN sed -i \
     -e "s~^;cgi.fix_pathinfo.*$~cgi.fix_pathinfo=0~g" \
