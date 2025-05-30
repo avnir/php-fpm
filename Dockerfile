@@ -22,6 +22,10 @@ RUN apt-get update \
         php8.3-soap \
         php8.3-xml \
         php8.3-zip \
+        php8.3-sqlite3 \
+        php8.3-tokenizer \
+        php8.3-xmlwriter \
+        sqlite3 \
         php-pear \
     && apt-get autoremove -y \
     && apt-get clean \
