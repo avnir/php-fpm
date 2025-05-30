@@ -1,4 +1,4 @@
-VERSION ?= php8.2
+VERSION ?= php8.3
 IMAGE_NAME ?= avnir/php-fpm
 BUILDER := mybuilder
 
